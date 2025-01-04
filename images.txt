@@ -6,3 +6,4 @@
 #--platform=linux/arm64 xiaoyaliu/alist
 hello-world:latest
 alpine:latest
+12.1.0-runtime-ubuntu20.04
