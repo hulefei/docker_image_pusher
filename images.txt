@@ -9,3 +9,4 @@ alpine:latest
 nvidia/cuda:12.1.0-runtime-ubuntu20.04
 pytorch/pytorch:2.5.1-cuda12.1-cudnn9-runtime
 nvidia/cuda:12.1.0-base-ubuntu20.04
+debian:12.8
