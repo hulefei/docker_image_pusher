@@ -5,6 +5,7 @@ REGISTRY_USER="$1"  # 替换为实际值
 REGISTRY_PASSWORD="$2"  # 替换为实际值
 NAME_SPACE="$3"  # 替换为实际值
 REGISTRY="$4"  # 替换为实际值
+TWO_LEVEL_MODE="${5:-true}"  # 两级模式：true=压平多级 namespace（默认），false=保留多级路径
 
 docker login -u "$REGISTRY_USER" -p "$REGISTRY_PASSWORD" "$REGISTRY"
 
@@ -48,8 +49,22 @@ process_images() {
             print out
         }')
 
+        # 生成 namespace 前缀
+        # 分隔符约定（便于区分来源）：
+        #   _  -> platform 分隔（如 linux_arm64_）
+        #   .  -> namespace 分隔（两级模式下压平多级路径）
+        #   -  -> 镜像原名里自带的连字符（不改动）
         name_space_prefix=""
-        [[ -n "$name_space" ]] && name_space_prefix="${name_space}/"
+        if [[ -n "$name_space" ]]; then
+            if [[ "$TWO_LEVEL_MODE" == "true" ]]; then
+                # 两级模式：把多级 namespace 用 . 压平，保证最终为 namespace/reponame
+                name_space_flat="${name_space//\//.}"
+                name_space_prefix="${name_space_flat}."
+            else
+                # 多级模式：保留原始层级路径
+                name_space_prefix="${name_space}/"
+            fi
+        fi
 
         new_image="$REGISTRY/$NAME_SPACE/$platform_prefix$name_space_prefix$image_name_tag"
 
