@@ -8,6 +8,8 @@ minio/minio:latest
 nvidia/cuda:12.0.0-base-ubuntu22.04
 vllm/vllm-openai:latest
 tencentos/tencentos4:latest
+pytorch/pytorch:2.5.1-cuda12.4-cudnn9-devel
+pytorch/pytorch:2.8.0-cuda12.6-cudnn9-devel
 #nvidia/cuda:12.1.0-runtime-ubuntu20.04
 #pytorch/pytorch:2.5.1-cuda12.1-cudnn9-runtime
 #nvidia/cuda:12.1.0-base-ubuntu20.04
